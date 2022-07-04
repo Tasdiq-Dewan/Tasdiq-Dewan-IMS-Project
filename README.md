@@ -8,27 +8,13 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
+Latest Java SE Development Kit version 17 installed.
+Latest MySQL Community Server version 8 installed including MySQL Workbench.
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
+Step 1: Clone the repository to your local device.
+Step 2: 
 
 End with an example of getting some data out of the system or using it for a little demo
 
