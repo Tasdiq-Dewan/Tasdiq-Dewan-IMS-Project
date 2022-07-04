@@ -1,7 +1,6 @@
-Coverage: 34%
-# Project Title
+# Software Core Fundamental IMS Project
 
-One Paragraph of project description goes here
+Inventory Management System project for QA Acadamy to demonstrate concepts in Agile & Project Management, Databases, and Programming Fundamentals.
 
 ## Getting Started
 
@@ -75,6 +74,8 @@ We use [SemVer](http://semver.org/) for versioning.
 ## Authors
 
 * **Chris Perrins** - *Initial work* - [christophperrins](https://github.com/christophperrins)
+* **JHarry** - *Template this project is forked from* - [jharry](https://github.com/JHarry444)
+* **Tasdiq Dewan** - QA Academy trainee - [Tasdiq Dewan](https://github.com/Tasdiq-Dewan)
 
 ## License
 
