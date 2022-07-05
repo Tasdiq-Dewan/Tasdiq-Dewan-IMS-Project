@@ -25,18 +25,10 @@ CREATE TABLE IF NOT EXISTS orders(
     FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
 );
 
-CREATE TABLE IF NOT EXISTS customerorders(
-	id INT(11) NOT NULL AUTO_INCREMENT,
-    customer_id INT(11) NOT NULL,
-    order_id INT(11) NOT NULL,
-    PRIMARY KEY(id),
-    FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
-    FOREIGN KEY (order_id) REFERENCES orders(order_id)
-);
 CREATE TABLE IF NOT EXISTS itemorders(
-	id INT(11) NOT NULL AUTO_INCREMENT,
-    item_id INT(11) NOT NULL,
+	id INT(11) NOT NULL AUTO_INCREMENT, 
     order_id INT(11) NOT NULL,
+    item_id INT(11) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (order_id) REFERENCES orders(order_id),
     FOREIGN KEY (item_id) REFERENCES items(item_id)
