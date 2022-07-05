@@ -5,10 +5,12 @@ import java.util.Objects;
 
 public class Order {
 	
-	private Long orderId;
-	private Long customerId;
-	private List<Item> itemList;
+	private Long orderId; //order id
+	private Long customerId; //customer id foreign key
+	private List<Item> itemList; //list of items associated with the order
 	
+	
+	//Constructor for pulling order entity from database
 	public Order(Long id, Long customer_id, List<Item> list) {
 		super();
 		this.orderId = id;
@@ -16,6 +18,7 @@ public class Order {
 		this.itemList = list;
 	}
 
+	//Constructor without id for creating new row in orders table
 	public Order(Long customer_id) {
 		super();
 		this.customerId = customer_id;
