@@ -4,10 +4,12 @@ import java.util.Objects;
 
 public class Item {
 
-	private Long id;
-	private String itemName;
-	private float value;
+	private Long id; //id for item
+	private String itemName; //item name
+	private float value; //value of the item
 	
+	
+	//Constructor for creating Item after pulling data from database
 	public Item(long id, String itemName, float value) {
 		super();
 		this.id = id;
@@ -15,6 +17,8 @@ public class Item {
 		this.value = value;
 	}
 
+	
+	//Constructor without id to add a new row to items table
 	public Item(String itemName, float value) {
 		super();
 		this.itemName = itemName;
