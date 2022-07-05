@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Item {
 
-	private long id;
+	private Long id;
 	private String itemName;
 	private float value;
 	
