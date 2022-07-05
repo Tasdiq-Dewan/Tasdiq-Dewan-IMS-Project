@@ -208,4 +208,22 @@ public class OrderDAO implements Dao<Order> {
 		}
 		return 0;
 	}
+	
+	public float costOfOrder(Long orderId) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				PreparedStatement statement = connection.prepareStatement("SELECT SUM(i.value) AS sum "
+						+ "FROM items i "
+						+ "INNER JOIN itemorders ie ON ie.item_id = i.item_id "
+						+ "WHERE ie.order_id = ?;");) {
+			statement.setLong(1, orderId);
+			try(ResultSet resultSet = statement.executeQuery();){
+				resultSet.next();
+				return resultSet.getFloat("sum");
+			}
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return 0f;
+	}
 }
