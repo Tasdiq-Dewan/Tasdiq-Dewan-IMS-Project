@@ -61,7 +61,7 @@ public class OrderDAO implements Dao<Order> {
 	public Item itemFromResultSet(ResultSet resultSet) throws SQLException {
 		Long id = resultSet.getLong("item_id");
 		String itemName = resultSet.getString("item_name");
-		float value = resultSet.getFloat("ite_value");
+		float value = resultSet.getFloat("item_value");
 		return new Item(id, itemName, value);
 	}
 
