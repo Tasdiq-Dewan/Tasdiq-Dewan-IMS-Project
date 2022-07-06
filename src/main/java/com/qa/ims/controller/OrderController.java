@@ -36,6 +36,19 @@ public class OrderController implements CrudController<Order> {
 		}
 		return orders;
 	}
+	
+	/**
+	 * Creates a customer by taking in user input
+	 */
+	@Override
+	public Order create() {
+		LOGGER.info("Please the id of the customer this order is for");
+		Long customerId = utils.getLong();
+		Order order = orderDAO.create(new Order(customerId));
+		LOGGER.info("Order created");
+		return order;
+	}
+
 
 
 }
