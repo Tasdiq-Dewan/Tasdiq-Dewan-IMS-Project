@@ -6,11 +6,11 @@ public class Item {
 
 	private Long id; //id for item
 	private String itemName; //item name
-	private float value; //value of the item
+	private double value; //value of the item
 	
 	
 	//Constructor for creating Item after pulling data from database
-	public Item(long id, String itemName, float value) {
+	public Item(long id, String itemName, double value) {
 		super();
 		this.id = id;
 		this.itemName = itemName;
@@ -19,7 +19,7 @@ public class Item {
 
 	
 	//Constructor without id to add a new row to items table
-	public Item(String itemName, float value) {
+	public Item(String itemName, double value) {
 		super();
 		this.itemName = itemName;
 		this.value = value;
@@ -41,7 +41,7 @@ public class Item {
 		this.itemName = itemName;
 	}
 
-	public float getValue() {
+	public double getValue() {
 		return value;
 	}
 
@@ -68,8 +68,8 @@ public class Item {
 		if (getClass() != obj.getClass())
 			return false;
 		Item other = (Item) obj;
-		return id == other.id && Objects.equals(itemName, other.itemName)
-				&& Float.floatToIntBits(value) == Float.floatToIntBits(other.value);
+		return Objects.equals(id, other.id) && Objects.equals(itemName, other.itemName)
+				&& Double.doubleToLongBits(value) == Double.doubleToLongBits(other.value);
 	}
 	
 	
