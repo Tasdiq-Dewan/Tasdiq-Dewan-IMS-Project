@@ -24,7 +24,7 @@ public class ItemController implements CrudController<Item> {
 	}
 
 	/**
-	 * Reads all customers to the logger
+	 * Reads all items to the logger
 	 */
 	@Override
 	public List<Item> readAll() {
@@ -36,33 +36,33 @@ public class ItemController implements CrudController<Item> {
 	}
 
 	/**
-	 * Creates a customer by taking in user input
+	 * Creates a item by taking in user input
 	 */
 	@Override
-	public Customer create() {
-		LOGGER.info("Please enter a first name");
-		String firstName = utils.getString();
-		LOGGER.info("Please enter a surname");
-		String surname = utils.getString();
-		Customer customer = customerDAO.create(new Customer(firstName, surname));
+	public Item create() {
+		LOGGER.info("Please enter an item name");
+		String itemName = utils.getString();
+		LOGGER.info("Please enter a value");
+		double value = utils.getDouble();
+		Item item = itemDAO.create(new Item(itemName, value));
 		LOGGER.info("Customer created");
-		return customer;
+		return item;
 	}
 
 	/**
-	 * Updates an existing customer by taking in user input
+	 * Updates an existing item by taking in user input
 	 */
 	@Override
-	public Customer update() {
-		LOGGER.info("Please enter the id of the customer you would like to update");
+	public Item update() {
+		LOGGER.info("Please enter the id of the item you would like to update");
 		Long id = utils.getLong();
-		LOGGER.info("Please enter a first name");
-		String firstName = utils.getString();
-		LOGGER.info("Please enter a surname");
-		String surname = utils.getString();
-		Customer customer = customerDAO.update(new Customer(id, firstName, surname));
+		LOGGER.info("Please enter an item name");
+		String itemName = utils.getString();
+		LOGGER.info("Please enter a value");
+		Double value = utils.getDouble();
+		Item item = itemDAO.update(new Item(id, itemName, value));
 		LOGGER.info("Customer Updated");
-		return customer;
+		return item;
 	}
 
 	/**
