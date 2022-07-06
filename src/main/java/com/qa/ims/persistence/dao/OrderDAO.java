@@ -181,19 +181,18 @@ public class OrderDAO implements Dao<Order> {
 	/**
 	 * 
 	 */
-	public Order addItemToOrder(Long orderId, Long itemId) {
+	public int addItemToOrder(Long orderId, Long itemId) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
 						.prepareStatement("INSERT INTO itemorders(order_id, item_id) VALUES (?, ?)");) {
 			statement.setLong(1, orderId);
 			statement.setLong(2, itemId);
-			statement.executeUpdate();
-			return readLatest();
+			return statement.executeUpdate();
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
-		return null;
+		return 0;
 	}
 	
 	public int deleteItemFromOrder(Long orderId, Long itemId) {

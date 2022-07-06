@@ -50,7 +50,7 @@ public class OrderController implements CrudController<Order> {
 	}
 	
 	/**
-	 * Updates an existing customer by taking in user input
+	 * Updates an existing order by taking in user input
 	 */
 	@Override
 	public Order update() {
@@ -58,11 +58,49 @@ public class OrderController implements CrudController<Order> {
 		Long id = utils.getLong();
 		LOGGER.info("Please enter the new customer id for this order");
 		Long customerId = utils.getLong();
-		Order order = orderDAO(new Order(customerId));
+		Order order = orderDAO.update(new Order(customerId));
 		LOGGER.info("Order Updated");
 		return order;
 	}
+	
+	/**
+	 * Deletes an existing order by the id of the order
+	 * 
+	 * @return int 
+	 */
+	@Override
+	public int delete() {
+		LOGGER.info("Please enter the id of the order you would like to delete");
+		Long id = utils.getLong();
+		return orderDAO.delete(id);
+	}
 
+	
+	/**
+	 * Add an item to the order by inputting item id
+	 * 
+	 * @return int
+	 */
+	public int addItem() {
+		LOGGER.info("Please enter the id of the order you would like to add an item to");
+		Long orderId = utils.getLong();
+		LOGGER.info("Please enter the id of the item you would like to add");
+		Long itemId = utils.getLong();
+		return orderDAO.addItemToOrder(orderId, itemId);
+	}
+	
+	/**
+	 * Deleting an item from the order by inputting item id
+	 * 
+	 * @return int
+	 */
+	public int deleteItem() {
+		LOGGER.info("Please enter the id of the order you would like to delete an item from");
+		Long orderId = utils.getLong();
+		LOGGER.info("Please enter the id of the item you would like to delete from the order");
+		Long itemId = utils.getLong();
+		return orderDAO.deleteItemFromOrder(orderId, itemId);
+	}
 
 
 }
