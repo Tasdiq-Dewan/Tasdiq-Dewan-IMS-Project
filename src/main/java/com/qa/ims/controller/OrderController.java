@@ -98,6 +98,19 @@ public class OrderController implements CrudController<Order> {
 		Long itemId = utils.getLong();
 		return orderDAO.deleteItemFromOrder(orderId, itemId);
 	}
+	
+	/**
+	 * Get total cost of an order
+	 * 
+	 * @return double
+	 */
+	public double cost() {
+		LOGGER.info("Please enter the id of the order you would like the cost of");
+		Long id = utils.getLong();
+		double cost = orderDAO.costOfOrder(id);
+		LOGGER.info("Cost of the order is £"+cost);
+		return cost;
+	}
 
 
 }

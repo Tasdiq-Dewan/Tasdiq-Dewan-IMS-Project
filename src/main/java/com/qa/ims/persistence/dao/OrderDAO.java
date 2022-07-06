@@ -208,7 +208,7 @@ public class OrderDAO implements Dao<Order> {
 		return 0;
 	}
 	
-	public float costOfOrder(Long orderId) {
+	public double costOfOrder(Long orderId) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection.prepareStatement("SELECT SUM(i.item_value) "
 						+ "FROM items i "
@@ -217,7 +217,7 @@ public class OrderDAO implements Dao<Order> {
 			statement.setLong(1, orderId);
 			try(ResultSet resultSet = statement.executeQuery();){
 				resultSet.next();
-				return resultSet.getFloat("SUM(i.item_value");
+				return resultSet.getDouble("SUM(i.item_value");
 			}
 		} catch (SQLException e) {
 			LOGGER.debug(e);
