@@ -217,7 +217,7 @@ public class OrderDAO implements Dao<Order> {
 			statement.setLong(1, orderId);
 			try(ResultSet resultSet = statement.executeQuery();){
 				resultSet.next();
-				return resultSet.getDouble("SUM(i.item_value");
+				return resultSet.getDouble("SUM(i.item_value)");
 			}
 		} catch (SQLException e) {
 			LOGGER.debug(e);
