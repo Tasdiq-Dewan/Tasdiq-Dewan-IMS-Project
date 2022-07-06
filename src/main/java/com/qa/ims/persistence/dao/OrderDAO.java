@@ -39,7 +39,7 @@ public class OrderDAO implements Dao<Order> {
 	
 	public List<Item> getOrderItems(Long id){
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				PreparedStatement statement = connection.prepareStatement("SELECT i.item_id, i.item_name, i.value "
+				PreparedStatement statement = connection.prepareStatement("SELECT i.item_id, i.item_name, i.item_value "
 						+ "FROM items i "
 						+ "INNER JOIN itemorders ie ON ie.item_id = i.item_id "
 						+ "WHERE ie.order_id = ?;");) {
@@ -211,14 +211,14 @@ public class OrderDAO implements Dao<Order> {
 	
 	public float costOfOrder(Long orderId) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				PreparedStatement statement = connection.prepareStatement("SELECT SUM(i.value) AS sum "
+				PreparedStatement statement = connection.prepareStatement("SELECT SUM(i.item_value) "
 						+ "FROM items i "
 						+ "INNER JOIN itemorders ie ON ie.item_id = i.item_id "
 						+ "WHERE ie.order_id = ?;");) {
 			statement.setLong(1, orderId);
 			try(ResultSet resultSet = statement.executeQuery();){
 				resultSet.next();
-				return resultSet.getFloat("sum");
+				return resultSet.getFloat("SUM(i.item_value");
 			}
 		} catch (SQLException e) {
 			LOGGER.debug(e);

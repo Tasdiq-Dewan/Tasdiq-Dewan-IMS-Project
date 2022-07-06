@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import com.qa.ims.persistence.dao.CustomerDAO;
 import com.qa.ims.persistence.dao.OrderDAO;
 import com.qa.ims.persistence.domain.Order;
+import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.utils.Utils;
 
@@ -23,5 +24,18 @@ public class OrderController implements CrudController<Order> {
 		this.orderDAO = orderDAO;
 		this.utils = utils;
 	}
+	
+	/**
+	 * Reads all orders to the logger
+	 */
+	@Override
+	public List<Order> readAll() {
+		List<Order> orders = orderDAO.readAll();
+		for (Order order: orders) {
+			LOGGER.info(order);
+		}
+		return orders;
+	}
+
 
 }
