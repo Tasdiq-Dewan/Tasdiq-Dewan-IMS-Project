@@ -48,6 +48,20 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("Order created");
 		return order;
 	}
+	
+	/**
+	 * Updates an existing customer by taking in user input
+	 */
+	@Override
+	public Order update() {
+		LOGGER.info("Please enter the id of the order you would like to update");
+		Long id = utils.getLong();
+		LOGGER.info("Please enter the new customer id for this order");
+		Long customerId = utils.getLong();
+		Order order = orderDAO(new Order(customerId));
+		LOGGER.info("Order Updated");
+		return order;
+	}
 
 
 
