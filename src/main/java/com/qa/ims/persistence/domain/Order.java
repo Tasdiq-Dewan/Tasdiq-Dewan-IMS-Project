@@ -1,5 +1,6 @@
 package com.qa.ims.persistence.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,11 +18,19 @@ public class Order {
 		this.customerId = customer_id; 
 		this.itemList = list;
 	}
+	
+	public Order(Long id, Long customer_id) {
+		super();
+		this.orderId = id;
+		this.customerId = customer_id; 
+		this.itemList = new ArrayList<Item>();
+	}
 
 	//Constructor without id for creating new row in orders table
 	public Order(Long customer_id) {
 		super();
 		this.customerId = customer_id;
+		this.itemList = new ArrayList<Item>();
 	}
 
 	public Long getOrderId() {

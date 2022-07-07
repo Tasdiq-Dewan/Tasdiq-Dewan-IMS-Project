@@ -1,5 +1,5 @@
 
-DROP TABLE IF EXISTS `customers`;
+DROP TABLE IF EXISTS `customers` CASCADE;
 CREATE TABLE IF NOT EXISTS `customers` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
     `first_name` VARCHAR(40) NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `customers` (
     PRIMARY KEY (`id`)
 );
 
-DROP TABLE IF EXISTS `items`;
+DROP TABLE IF EXISTS `items` CASCADE;
 CREATE TABLE IF NOT EXISTS `items` (
 	`item_id` INT(11) NOT NULL AUTO_INCREMENT,
     `item_name` VARCHAR(40) NOT NULL,
@@ -15,15 +15,15 @@ CREATE TABLE IF NOT EXISTS `items` (
     PRIMARY KEY (`item_id`)
 );
 
-DROP TABLE IF EXISTS `orders`;
+DROP TABLE IF EXISTS `orders` CASCADE;
 CREATE TABLE IF NOT EXISTS `orders`(
 	`order_id` INT(11) NOT NULL AUTO_INCREMENT,
     `customer_id` INT(11) NOT NULL,
-    PRIMARY KEY (`order_id),
+    PRIMARY KEY (`order_id`),
     FOREIGN KEY (`customer_id`) REFERENCES customers(`id`) ON DELETE CASCADE
 );
 
-DROP TABLE IF EXISTS `itemorders`;
+DROP TABLE IF EXISTS `itemorders` CASCADE;
 CREATE TABLE IF NOT EXISTS `itemorders`(
 	`id` INT(11) NOT NULL AUTO_INCREMENT, 
     `order_id` INT(11) NOT NULL,

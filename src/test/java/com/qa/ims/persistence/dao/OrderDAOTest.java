@@ -14,6 +14,8 @@ import com.qa.ims.utils.DBUtils;
 
 public class OrderDAOTest {
 	
+	private final OrderDAO DAO = new OrderDAO();
+	
 	@Before
 	public void setup() {
 		DBUtils.connect();
@@ -21,6 +23,47 @@ public class OrderDAOTest {
 	}
 	
 	@Test
-	public void testCreate()
+	public void testReadAll() {
+		List<Item> expectedItems = new ArrayList<Item>();
+		expectedItems.add(new Item(1L, "book", 10.00d));
+		expectedItems.add(new Item(2L, "hat", 18.50d));
+		Order order = new Order(1L, 1L, expectedItems);
+		List<Order> expected = new ArrayList<Order>();
+		expected.add(order);
+		assertEquals(expected, DAO.readAll());
+	}
+	
+	@Test
+	public void testReadLatest() {
+		List<Item> expectedItems = new ArrayList<Item>();
+		expectedItems.add(new Item(1L, "book", 10.00d));
+		expectedItems.add(new Item(2L, "hat", 18.50d));
+		Order expected = new Order(1L, 1L, expectedItems);
+		assertEquals(expected, DAO.readLatest());
+	}
+	
+	@Test
+	public void testRead() {
+		List<Item> expectedItems = new ArrayList<Item>();
+		expectedItems.add(new Item(1L, "book", 10.00d));
+		expectedItems.add(new Item(2L, "hat", 18.50d));
+		Order expected = new Order(1L, 1L, expectedItems);
+		assertEquals(expected, DAO.read(1L));
+	}
+	
+	@Test
+	public void testCreate() {
+		Order expected = new Order(2L, 1L);
+		assertEquals(expected, DAO.create(expected));
+	}
+	
+	@Test
+	public void testUpdate() {
+		List<Item> expectedItems = new ArrayList<Item>();
+		expectedItems.add(new Item(1L, "book", 10.00d));
+		expectedItems.add(new Item(2L, "hat", 18.50d));
+		Order expected = new Order(1L, 1L, expectedItems);
+		assertEquals(expected, DAO.update(expected));
+	}
 
 }

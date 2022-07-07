@@ -161,9 +161,9 @@ public class OrderDAO implements Dao<Order> {
 	}
 
 	/**
-	 * Deletes a customer in the database
+	 * Deletes order in the database
 	 * 
-	 * @param id - id of the customer
+	 * @param id - id of the order
 	 */
 	@Override
 	public int delete(long id) {
