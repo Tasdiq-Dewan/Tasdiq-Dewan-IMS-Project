@@ -108,4 +108,17 @@ public class OrderControllerTest {
 		Mockito.verify(this.utils, Mockito.times(2)).getLong();
 		Mockito.verify(this.dao, Mockito.times(1)).deleteItemFromOrder(orderId, itemId);
 	}
+	
+	@Test
+	public void testCost() {
+		final double cost = 50.00d;
+		final Long id = 1L;
+		Mockito.when(utils.getLong()).thenReturn(id);
+		Mockito.when(dao.costOfOrder(id)).thenReturn(cost);
+		
+		assertEquals(cost, controller.cost(), 0.001);
+		
+		Mockito.verify(this.utils, Mockito.times(1)).getLong();
+		Mockito.verify(this.dao, Mockito.times(1)).costOfOrder(id);
+	}
 }
