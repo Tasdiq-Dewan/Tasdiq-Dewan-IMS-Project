@@ -65,5 +65,25 @@ public class OrderDAOTest {
 		Order expected = new Order(1L, 1L, expectedItems);
 		assertEquals(expected, DAO.update(expected));
 	}
+	
+	@Test
+	public void testDelete() {
+		assertEquals(1, DAO.delete(1L));
+	}
+	
+	@Test
+	public void testAddItem() {
+		assertEquals(1, DAO.addItemToOrder(1L, 3L));
+	}
 
+	@Test
+	public void testDeleteItem() {
+		assertEquals(1, DAO.deleteItemFromOrder(1L, 2L));
+	}
+	
+	@Test
+	public void testCost() {
+		assertEquals(28.50d, DAO.costOfOrder(1L), 0.001);
+	}
+	
 }
