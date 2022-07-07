@@ -1,5 +1,7 @@
 package com.qa.ims.controllers;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +30,16 @@ public class OrderControllerTest {
 	@InjectMocks
 	private OrderController controller;
 	
-	
+	@Test
+	public void testReadAll() {
+		List<Order> orders = new ArrayList<Order>();
+		orders.add(new Order(1L, 1L));
+		
+		Mockito.when(dao.readAll()).thenReturn(orders);
+		
+		assertEquals(orders, controller.readAll());
+		
+		Mockito.verify(this.dao, Mockito.times(1)).readAll();
+	}
 
 }
