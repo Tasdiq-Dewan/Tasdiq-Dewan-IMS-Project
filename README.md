@@ -23,6 +23,17 @@ Step 2: Go into Tasdiq-Dewan-IMS-Project\src\main\resources and open sql-schema.
 
 Step 3: Open Tasdiq-Dewan-IMS-Project\src\main\resources\db.properties and edit the port, username, and password to match those of your local MySQL instance.
 
+### Running in command prompt
+
+Step 1: Open comman prompt at Tasdiq-Dewan-IMS-Project
+
+Step 2: Run the command 
+
+```
+java -jar ims-0.0.1-jar-with-dependencies.jar
+
+```
+
 #### Editing and Running in Eclipse
 
 Open Tasdiq-Dewan-IMS-Project in Eclipse as a Maven project. Ensure the Java Build Path is set to JavaSE-17.
@@ -65,7 +76,7 @@ DAO Tests:
 
 There are 3 Unit tests for the com.qa.ims.persistance.dao package under src/test/java: CustomerDAOTest.java, ItemDAOTest.java, OrderDAOTest.java.
 
-These perform JUnit tests of each CRUD method in the DAO classes, accessing a h2 instance of the ims database schema stored in memory.
+These perform JUnit tests of each CRUD method in the CustomerDAO, ItemDAO, and OrderDAO classes, accessing a h2 instance of the ims database schema stored in memory.
 
 ```
 package com.qa.ims.persistence.dao;
@@ -130,20 +141,105 @@ public class CustomerDAOTest {
 
 ```
 
+To run these test, right click com.qa.ims.persistance.dao package under src/test/java and click Coverage As JUnit test
+
 ### Integration Tests 
-Explain what these tests test, why and how to run them
+
+There are 3 integration tests in the com.qa.ims.controllers package within src/test/java, they are CustomerControllerTest.java, ItemControllerTest.java, and OrderControllerTest.java
+
+They test CustomerController.java, ItemController.java, and OrderController.java respectively.
+
+Mockito is used to mock the results of the Utils instance and the respective DAO instances that each Controller depends on.
 
 ```
-Give an example
-```
+package com.qa.ims.controllers;
 
-### And coding style tests
+import static org.junit.Assert.assertEquals;
 
-Explain what these tests test and why
+import java.util.ArrayList;
+import java.util.List;
 
-```
-Give an example
-```
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
+
+import com.qa.ims.controller.CustomerController;
+import com.qa.ims.persistence.dao.CustomerDAO;
+import com.qa.ims.persistence.domain.Customer;
+import com.qa.ims.utils.Utils;
+
+@RunWith(MockitoJUnitRunner.class)
+public class CustomerControllerTest {
+
+	@Mock
+	private Utils utils;
+
+	@Mock
+	private CustomerDAO dao;
+
+	@InjectMocks
+	private CustomerController controller;
+
+	@Test
+	public void testCreate() {
+		final String F_NAME = "barry", L_NAME = "scott";
+		final Customer created = new Customer(F_NAME, L_NAME);
+
+		Mockito.when(utils.getString()).thenReturn(F_NAME, L_NAME);
+		Mockito.when(dao.create(created)).thenReturn(created);
+
+		assertEquals(created, controller.create());
+
+		Mockito.verify(utils, Mockito.times(2)).getString();
+		Mockito.verify(dao, Mockito.times(1)).create(created);
+	}
+
+	@Test
+	public void testReadAll() {
+		List<Customer> customers = new ArrayList<>();
+		customers.add(new Customer(1L, "jordan", "harrison"));
+
+		Mockito.when(dao.readAll()).thenReturn(customers);
+
+		assertEquals(customers, controller.readAll());
+
+		Mockito.verify(dao, Mockito.times(1)).readAll();
+	}
+
+	@Test
+	public void testUpdate() {
+		Customer updated = new Customer(1L, "chris", "perrins");
+
+		Mockito.when(this.utils.getLong()).thenReturn(1L);
+		Mockito.when(this.utils.getString()).thenReturn(updated.getFirstName(), updated.getSurname());
+		Mockito.when(this.dao.update(updated)).thenReturn(updated);
+
+		assertEquals(updated, this.controller.update());
+
+		Mockito.verify(this.utils, Mockito.times(1)).getLong();
+		Mockito.verify(this.utils, Mockito.times(2)).getString();
+		Mockito.verify(this.dao, Mockito.times(1)).update(updated);
+	}
+
+	@Test
+	public void testDelete() {
+		final long ID = 1L;
+
+		Mockito.when(utils.getLong()).thenReturn(ID);
+		Mockito.when(dao.delete(ID)).thenReturn(1);
+
+		assertEquals(1L, this.controller.delete());
+
+		Mockito.verify(utils, Mockito.times(1)).getLong();
+		Mockito.verify(dao, Mockito.times(1)).delete(ID);
+	}
+
+}
+
+
 
 ## Deployment
 
