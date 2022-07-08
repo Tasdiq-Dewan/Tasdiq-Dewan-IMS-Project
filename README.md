@@ -346,6 +346,8 @@ public class CustomerControllerTest {
 
 }
 
+```
+
 To run these integration tests right click com.qa.ims.controllers package within src/test/java and Run As JUnit Test.
 
 ![image](https://user-images.githubusercontent.com/37335919/177977172-6bf5ba33-a67f-467d-8690-24c0b2f79c38.png)
