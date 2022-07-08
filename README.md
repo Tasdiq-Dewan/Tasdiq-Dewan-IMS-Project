@@ -38,7 +38,25 @@ java -jar ims-0.0.1-jar-with-dependencies.jar
 
 Open Tasdiq-Dewan-IMS-Project in Eclipse as a Maven project. Ensure the Java Build Path is set to JavaSE-17.
 
-To run the program, run asdiq-Dewan-IMS-Project/src/main/java/com/qa/ims/Runner.java as Java application. 
+To run the program, run src/main/java/com/qa/ims/Runner.java as Java application. 
+
+## Using the IMS app
+
+### Selecting an Entity
+
+Upon starting the application, you will be given the option to choose an entity to manage; Customer, Item, or Order ; or to stop the program.
+
+![image](https://user-images.githubusercontent.com/37335919/178000201-772cff4a-2a5e-446d-982d-49229aecbe8c.png)
+
+### Managing Customers
+
+If customer is selected, you will be present with the options to read, create, update, or delete customers. Return will return you to the entity selection.
+
+![image](https://user-images.githubusercontent.com/37335919/178000646-6e4c9c69-eec1-4520-9f0c-20fd38985087.png)
+
+Read will read and print all customers, including ID, first name, and surname. Create will ask for a first name and surname of the new customer to be created. Update will ask for the ID of the customer you would like to update, and then the new first name and surname. Delete will ask for the ID of the customer you would like to delete.
+
+
 
 ## Running the tests
 
