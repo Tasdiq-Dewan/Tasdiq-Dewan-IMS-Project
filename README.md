@@ -56,7 +56,25 @@ If customer is selected, you will be present with the options to read, create, u
 
 Read will read and print all customers, including ID, first name, and surname. Create will ask for a first name and surname of the new customer to be created. Update will ask for the ID of the customer you would like to update, and then the new first name and surname. Delete will ask for the ID of the customer you would like to delete.
 
+### Managing Items
 
+If item is selected, you will be present with the options to read, create, update, or delete items. Return will return you to the entity selection.
+
+![image](https://user-images.githubusercontent.com/37335919/178006272-f31d3361-f90c-4ea1-9713-28e47cca8c5e.png)
+
+Read will read and print all items, including ID, item name, and the value of the item. Create will ask for the name and value of the new item to be created. Update will ask for the ID of the item you would like to update and the new item name and value. Delete will ask for the ID of the item you would like to delete.
+
+### Managing Orders
+
+If order is selected, you will be present with the options to read, create, update, or delete orders; add or delete items from an order; or calculate the cost of an order. Return will return you to the entity selection.
+
+![image](https://user-images.githubusercontent.com/37335919/178006865-1638e17c-ef6f-4187-a515-a55ef1e6f8ab.png)
+
+Read will read and print all orders, including order ID, customer ID, as well as all fields for each item in the order. Create will ask for the ID of the customer this order is for and create a new order. Update will ask for the ID of the order you want to update and the new customer ID you are changing to. Delete will ask for the ID of the order you wish to delete.
+
+Add_item will ask for the order ID and then the ID of the item you wish to add to the order. Delete_item will ask for the order ID and the ID of the item you wish to delete from the order.
+
+Cost will ask for the ID of an order and will print the total cost of that order.
 
 ## Running the tests
 
