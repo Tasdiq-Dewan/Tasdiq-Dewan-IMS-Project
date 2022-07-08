@@ -25,7 +25,7 @@ Step 3: Open Tasdiq-Dewan-IMS-Project\src\main\resources\db.properties and edit 
 
 ### Running in command prompt
 
-Step 1: Open comman prompt at Tasdiq-Dewan-IMS-Project
+Step 1: Open command prompt at Tasdiq-Dewan-IMS-Project
 
 Step 2: Run the command 
 
@@ -38,7 +38,7 @@ java -jar ims-0.0.1-jar-with-dependencies.jar
 
 Open Tasdiq-Dewan-IMS-Project in Eclipse as a Maven project. Ensure the Java Build Path is set to JavaSE-17.
 
-To run the programm, run asdiq-Dewan-IMS-Project/src/main/java/com/qa/ims/Runner.java as Java application. 
+To run the program, run asdiq-Dewan-IMS-Project/src/main/java/com/qa/ims/Runner.java as Java application. 
 
 ## Running the tests
 
@@ -59,18 +59,19 @@ import org.junit.Test;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 
-
-public class CustomerTest {
-
+public class ItemTest {
 	@Test
 	public void testEquals() {
-		EqualsVerifier.simple().forClass(Customer.class).verify();
+		EqualsVerifier.simple().forClass(Item.class).verify();
 	}
-
 }
 ```
 
-To run these test, right click com.qa.ims.persistance.domain package under src/test/java and click Coverage As JUnit test
+To run these test, right click com.qa.ims.persistance.domain package under src/test/java and click Run As JUnit test
+
+![image](https://user-images.githubusercontent.com/37335919/177976921-13cca401-f93c-4dde-bd8b-57ff3c4879e5.png)
+
+The disparity between the Customer coverage and Item and Order coverage may be due to the auto generated equals and hashCode methods I used from eclipse for those classes. However they are still above 80% coverage.
 
 DAO Tests:
 
@@ -79,69 +80,139 @@ There are 3 Unit tests for the com.qa.ims.persistance.dao package under src/test
 These perform JUnit tests of each CRUD method in the CustomerDAO, ItemDAO, and OrderDAO classes, accessing a h2 instance of the ims database schema stored in memory.
 
 ```
-package com.qa.ims.persistence.dao;
+package com.qa.ims.controllers;
 
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
-import com.qa.ims.persistence.domain.Customer;
-import com.qa.ims.utils.DBUtils;
+import com.qa.ims.controller.OrderController;
+import com.qa.ims.persistence.dao.OrderDAO;
+import com.qa.ims.persistence.domain.Item;
+import com.qa.ims.persistence.domain.Order;
+import com.qa.ims.utils.Utils;
 
-public class CustomerDAOTest {
-
-	private final CustomerDAO DAO = new CustomerDAO();
-
-	@Before
-	public void setup() {
-		DBUtils.connect();
-		DBUtils.getInstance().init("src/test/resources/sql-schema.sql", "src/test/resources/sql-data.sql");
+@RunWith(MockitoJUnitRunner.class)
+public class OrderControllerTest {
+	
+	@Mock
+	private Utils utils;
+	
+	@Mock
+	private OrderDAO dao;
+	
+	@InjectMocks
+	private OrderController controller;
+	
+	@Test
+	public void testReadAll() {
+		List<Order> orders = new ArrayList<Order>();
+		orders.add(new Order(1L, 1L));
+		
+		Mockito.when(dao.readAll()).thenReturn(orders);
+		
+		assertEquals(orders, controller.readAll());
+		
+		Mockito.verify(this.dao, Mockito.times(1)).readAll();
 	}
 
 	@Test
 	public void testCreate() {
-		final Customer created = new Customer(2L, "chris", "perrins");
-		assertEquals(created, DAO.create(created));
+		final Long cId = 2L;
+		final Order order = new Order(1L, cId);
+		Mockito.when(utils.getLong()).thenReturn(cId);
+		Mockito.when(dao.create(new Order(cId))).thenReturn(order);
+		
+		assertEquals(order, controller.create());
+		
+		Mockito.verify(this.utils, Mockito.times(1)).getLong();
+		Mockito.verify(this.dao, Mockito.times(1)).create(new Order(cId));
 	}
-
-	@Test
-	public void testReadAll() {
-		List<Customer> expected = new ArrayList<>();
-		expected.add(new Customer(1L, "jordan", "harrison"));
-		assertEquals(expected, DAO.readAll());
-	}
-
-	@Test
-	public void testReadLatest() {
-		assertEquals(new Customer(1L, "jordan", "harrison"), DAO.readLatest());
-	}
-
-	@Test
-	public void testRead() {
-		final long ID = 1L;
-		assertEquals(new Customer(ID, "jordan", "harrison"), DAO.read(ID));
-	}
-
+	
 	@Test
 	public void testUpdate() {
-		final Customer updated = new Customer(1L, "chris", "perrins");
-		assertEquals(updated, DAO.update(updated));
-
+		final Long orderId = 1L, cId = 2L;
+		final Order order = new Order(orderId, cId);
+		
+		Mockito.when(utils.getLong()).thenReturn(orderId, cId);
+		
+		Mockito.when(dao.update(order)).thenReturn(order);
+		
+		assertEquals(order, controller.update());
+		
+		Mockito.verify(this.utils, Mockito.times(2)).getLong();
+		Mockito.verify(this.dao, Mockito.times(1)).update(order);
 	}
-
+	
 	@Test
 	public void testDelete() {
-		assertEquals(1, DAO.delete(1));
+		final Long id = 1L;
+		final int expected = 1;
+		Mockito.when(utils.getLong()).thenReturn(id);
+		Mockito.when(dao.delete(id)).thenReturn(expected);
+		
+		assertEquals(expected, controller.delete());
+		
+		Mockito.verify(this.utils, Mockito.times(1)).getLong();
+		Mockito.verify(this.dao, Mockito.times(1)).delete(id);
+	}
+	
+	@Test
+	public void testAddItem() {
+		final Long orderId = 1L, itemId = 3L;
+		int expected = 1;
+		Mockito.when(utils.getLong()).thenReturn(orderId, itemId);
+		Mockito.when(dao.addItemToOrder(orderId, itemId)).thenReturn(1);
+		
+		assertEquals(expected, controller.addItem());
+		
+		Mockito.verify(this.utils, Mockito.times(2)).getLong();
+		Mockito.verify(this.dao, Mockito.times(1)).addItemToOrder(orderId, itemId);
+	}
+	
+	@Test
+	public void testDeleteItem() {
+		final Long orderId = 1L, itemId = 3L;
+		int expected = 1;
+		Mockito.when(utils.getLong()).thenReturn(orderId, itemId);
+		Mockito.when(dao.deleteItemFromOrder(orderId, itemId)).thenReturn(1);
+		
+		assertEquals(expected, controller.deleteItem());
+		
+		Mockito.verify(this.utils, Mockito.times(2)).getLong();
+		Mockito.verify(this.dao, Mockito.times(1)).deleteItemFromOrder(orderId, itemId);
+	}
+	
+	@Test
+	public void testCost() {
+		final double cost = 50.00d;
+		final Long id = 1L;
+		Mockito.when(utils.getLong()).thenReturn(id);
+		Mockito.when(dao.costOfOrder(id)).thenReturn(cost);
+		
+		assertEquals(cost, controller.cost(), 0.001);
+		
+		Mockito.verify(this.utils, Mockito.times(1)).getLong();
+		Mockito.verify(this.dao, Mockito.times(1)).costOfOrder(id);
 	}
 }
 
-```
 
-To run these test, right click com.qa.ims.persistance.dao package under src/test/java and click Coverage As JUnit test
+
+```
+To run these test, right click com.qa.ims.persistance.dao package under src/test/java and click Run As JUnit test
+
+![image](https://user-images.githubusercontent.com/37335919/177977003-cb01f4e0-7f04-4ce6-8391-a78b63fcd210.png)
+
+The reason these DAO tests have 75% coverage is because the catch blocks are taken into account but aren't actually reached by any test. However all try blocks pass their tests.
 
 ### Integration Tests 
 
@@ -239,6 +310,9 @@ public class CustomerControllerTest {
 
 }
 
+To run these integration tests right click com.qa.ims.controllers package within src/test/java and Run As JUnit Test.
+
+![image](https://user-images.githubusercontent.com/37335919/177977172-6bf5ba33-a67f-467d-8690-24c0b2f79c38.png)
 
 
 ## Deployment
