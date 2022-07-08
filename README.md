@@ -8,13 +8,15 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-Latest Java SE Development Kit version 17 installed.
-Latest MySQL Community Server version 8 installed including MySQL Workbench.
+Have the latest [Java SE Development Kit version 17 installed.](https://www.oracle.com/java/technologies/downloads/#java17)
+Have the latest [MySQL Community Server version 8 installed including MySQL Workbench.](https://dev.mysql.com/downloads/windows/installer/8.0.html)
+
 
 ### Installing
 
 Step 1: Clone the repository to your local device.
-Step 2: 
+Step 2: Go into Tasdiq-Dewan-IMS-Project\src\main\resources and open sql-schema.sql and sql-data.sql in MySQL Workbench and then run them on your local instance
+Step 3: Open Tasdiq-Dewan-IMS-Project\src\main\resources\db.properties and edit the port, username, and password to match those of your local MySQL instance.
 
 End with an example of getting some data out of the system or using it for a little demo
 
