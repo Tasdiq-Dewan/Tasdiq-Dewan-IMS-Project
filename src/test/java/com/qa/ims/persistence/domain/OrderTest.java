@@ -8,7 +8,7 @@ public class OrderTest {
 
 	@Test
 	public void testEquals() {
-		EqualsVerifier.simple().forClass(Item.class).verify();
+		EqualsVerifier.simple().forClass(Order.class).verify();
 	}
 	
 }
